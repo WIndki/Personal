@@ -9,8 +9,8 @@ bool isExpressionValid(int* digits) {
     return (num1 + num2 == num3);
 }
 
-bool isAppeared(int arr[], int num2){
-    for(int i=0;i<=337;i++){
+bool isAppeared(int *arr, int num2){
+    for(int i=0;i<337;i++){
         if(arr[i]==num2){
             return 1;
         }
@@ -46,7 +46,7 @@ void generateAndOutputExpressions() {
     }
     }while(next_permutation(digits,digits+9));
 
-    cout <<"Total of " << count << " Expressions.";
+    cout <<"Total of " << count << " Expressions."<<endl;
 }
 
 int main() {
