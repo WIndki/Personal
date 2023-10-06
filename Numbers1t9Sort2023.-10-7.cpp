@@ -18,6 +18,19 @@ bool isAppeared(int *arr, int num2, int count){
     return 0;
 }
 
+template<typename T>//模板是创建泛型类或函数的蓝图或公式。
+bool mynext_permutation(T *start, T *end) { //[start,end)
+	T *cur = end - 1, *pre = cur - 1; //pre指向partitionNumber 
+	while (cur > start && *pre >= *cur) 
+		--cur, --pre; //从右到左进行扫描，发现第一个违背非递减趋势的数字
+	if (cur <= start) return false; //整个排列逆序, 不存在更大的排列 
+	//从右到左进行扫描，发现第一个比partitionNumber大的数
+	for (cur = end - 1; *cur <= *pre; --cur); //cur指向changeNumber  
+	swap(*pre, *cur);
+	reverse(pre + 1, end); //将尾部的逆序变成正序 
+	return true; 
+}
+
 void generateAndOutputExpressions() {
     int digits[9];
     for(int i=1;i<=9;i++){
