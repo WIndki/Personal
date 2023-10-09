@@ -27,8 +27,9 @@ void ToOutputArray(I inputArray[],int size)
 }
 
 template <typename I>
-void inputAndProcessArray(I inputArray[],int size)
+void inputAndProcessArray(int size)
 {
+    I inputArray[size - 1];
     for (int i = 0; i < size; i++)
     {
         cin >> inputArray[i];
@@ -45,18 +46,15 @@ int main()
     {
         if (dataType == 1)
         {
-            int inputArray[size - 1];
-            inputAndProcessArray(inputArray,size);
+            inputAndProcessArray<int>(size);
         }
         else if (dataType == 2)
         {
-            long inputArray[size - 1];
-            inputAndProcessArray(inputArray,size);
+            inputAndProcessArray<long>(size);
         }
         else if (dataType == 3)
         {
-            double inputArray[size - 1];
-            inputAndProcessArray(inputArray,size);
+            inputAndProcessArray<double>(size);
         }
     }
     return 0;
