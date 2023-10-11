@@ -12,43 +12,50 @@ LinkList *creatNewNode(int value,LinkList *p){
         p->next = s; //将链表除链表头的所有节点连接在新建节点之后
         s->next = NULL;//在让头结点指向新节点 注意：和上一语句顺序不能颠倒
 		(p = s);//p结点后移
-		return p;
+		return p;//返回P结点
 }
 
-LinkList *reverseList(LinkList* head) {
-	if (head == NULL || head->next == NULL) {
-		return head;
-	}
-	LinkList* prev = NULL;
-	LinkList* curr = head;
-	LinkList* next = NULL;
-	while (curr != NULL) {
-		next = curr->next;
-		curr->next = prev;
-		prev = curr;
-		curr = next;
-	}
-	return prev;
+LinkList* reverseList(LinkList* head) {
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+    LinkList* prev = NULL; // 前一个结点
+    LinkList* curr = head; // 当前结点
+    LinkList* next = NULL; // 下一个结点
+    while (curr != NULL) {
+        next = curr->next; // 将head->next暂存到next
+        curr->next = prev; // curr->next指向前一个结点
+        prev = curr; // 前一个结点后移
+        curr = next; // 当前结点后移,相当于curr
+    }
+    return prev; // 返回逆转后的链表头结点
 }
+
+void printList(LinkList* head) {
+    LinkList* p = head;
+    while (p->next != NULL) {
+        cout << p->data << " "; // 输出当前结点的数据
+        p = p->next; // 指针后移
+    }
+    cout << endl;
+}
+
 int main(){
     struct LinkList *head = (struct LinkList *) malloc(sizeof(struct LinkList));//创建头结点，并分配内存，需要的内存大小就是结构体的大小。别忘了在malloc前进行强制类型转换。（struct LinkList*）
     head->next = NULL;//头结点指针初始化
     struct LinkList *p;
 	p = head;//让p指针从"头"开始。
     int num;
+    int count = 0;//计数器
     while(cin>>num)//循环创建结点
     {
+        count++;
 		p = creatNewNode(num,p);
         if (cin.get() == '\n')
             break;
-    }//至此，链表的创建已经完成了。
-
-    p = reverseList(head);//让p指针从"头"开始。
-    while (p->next != NULL)//如果p的下一个结点不为NULL，也就是说如果p结点后还有节点存在，那就输出p后面结点中保存的数据。
-    {
-        printf("%-5d", p->next->data);
-        p = p->next;//p结点后移
-    }
-    printf("\n");
+    }//完成链表的创建
+    p = reverseList(head);//逆序next指针
+    cout<<count<<" "<<endl;
+    printList(p);
     return 0;
-}//至此完成了链表的遍历输出。
+}
