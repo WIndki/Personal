@@ -191,7 +191,6 @@ void MultiplyPoly(Polynomial &Pa, Polynomial &Pb)
             // 计算系数和指数
             float coef = t->coef * q->coef;
             int expn = t->expn + q->expn;
-
             // 找到Pa中第一个指数小于等于expn的项的前一个位置
             while (r->next && r->next->expn > expn)
                 r = r->next;
@@ -243,6 +242,7 @@ void MultiplyPoly(Polynomial &Pa, Polynomial &Pb)
     // 释放内存
     delete u;
 }
+
 
 
 int main()
