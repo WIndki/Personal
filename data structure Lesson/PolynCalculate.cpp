@@ -238,6 +238,7 @@ void MultiplyPoly(Polynomial &Pa, Polynomial &Pb)
 }
 
 
+
 int main()
 {   
     system("chcp 65001"); // 设置控制台编码为UTF-8
