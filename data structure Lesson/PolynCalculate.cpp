@@ -112,7 +112,6 @@ void AddPoly(Polynomial &Pa, Polynomial &Pb)
         r = s; // r指向s
         q = q->next; // q指向Pb的下一项
     }
-    Pb->next = NULL; // 将Pb清空
 }
 
 // 多项式相减 与相加完全相同。
@@ -166,12 +165,9 @@ void SubtractPoly(Polynomial &Pa, Polynomial &Pb)
         r = s;
         q = q->next;
     }
-    Pb->next = NULL;
 }
 
-// 多项式相乘
-
-// 多项式相乘
+//多项式相乘
 void MultiplyPoly(Polynomial &Pa, Polynomial &Pb)
 {
     // 初始化变量
@@ -191,7 +187,6 @@ void MultiplyPoly(Polynomial &Pa, Polynomial &Pb)
             // 计算系数和指数
             float coef = t->coef * q->coef;
             int expn = t->expn + q->expn;
-
             // 找到Pa中第一个指数小于等于expn的项的前一个位置
             while (r->next && r->next->expn > expn)
                 r = r->next;
@@ -234,8 +229,6 @@ void MultiplyPoly(Polynomial &Pa, Polynomial &Pb)
         t = t->next;
     }
 
-    // 清空Pb
-    Pb->next = NULL;
 
     // 将结果存储到Pa中
     Pa->next = u->next;
