@@ -19,6 +19,7 @@ void CreatePoly(Polynomial &P, int m)
     {
         float coef;
         int expn;
+        cout << "请输入" << i + 1 << "项的系数和指数：";
         cin >> coef >> expn;
         if (coef == 0)
             continue; // 系数为0则不创建结点
@@ -55,8 +56,9 @@ void PrintPoly(Polynomial P)
     {
         P = P->next;
         cout << P->coef << "X^" << P->expn;
-        if (P->next)
-            cout << " ";
+        if (P->next&&P->next->coef>0){
+            cout << "+";
+        }
     }
     cout << endl;
 }
@@ -232,7 +234,6 @@ void MultiplyPoly(Polynomial &Pa, Polynomial &Pb)
 
     // 将结果存储到Pa中
     Pa->next = u->next;
-
     // 释放内存
     delete u;
 }
@@ -244,8 +245,10 @@ int main()
     system("chcp 65001"); // 设置控制台编码为UTF-8
     Polynomial P1, P2;
     int m, n;
+    cout << "请输如P1的项数:";
     cin >> m;
     CreatePoly(P1, m); // 创建多项式P1
+    cout << "请输如P2的项数:";
     cin >> n;
     CreatePoly(P2, n); // 创建多项式P2
     cout << "请选择要进行的操作：\n"

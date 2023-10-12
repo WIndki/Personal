@@ -1,3 +1,8 @@
+/*
+
+*/
+#ifndef SequentialLinearList_H
+#define SequentialLinearList_H
 #include <iostream>
 using namespace std;
 
@@ -63,3 +68,4 @@ int LocateElem(SqList L, int e) {
     }
     return 0; // 未找到元素
 }
+#endif
