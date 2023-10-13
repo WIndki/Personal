@@ -1,39 +1,43 @@
 #include <iostream>
 using namespace std;
-
-typedef struct {
-    int *data; // 存储线性表元素
+//线性表顺序储存的C++泛型实现，动态分配内存。
+template<class T>
+struct SeqList{
+    T *data; // 地址基元
     int length; // 存储线性表长度
     int maxSize; // 存储线性表最大长度
-} SeqList;
+};
 
 // 创建线性表
-void CreateList(SeqList &L, int n) {
-    L.data = new int[n];
+template<class T>
+void CreateList(SeqList<T> &L, int n) {
+    L.data = new T[n];
     cout << "请输入线性表元素：" << endl;
     for (int i = 0; i < n; i++) {
         cin >> L.data[i];
+
     }
     L.length = n;
     L.maxSize = n;
 }
 
 // 插入元素
-bool InsertList(SeqList &L, int pos, int val) {
-    if (pos < 1 || pos > L.length + 1) {
+template<class T>
+bool InsertList(SeqList<T> &L, int pos, int val) {
+    if (pos < 1 || pos > L.length + 1) {//非法位置
         return false;
     }
-    if (L.length == L.maxSize) {
-        int *newData = new int[L.maxSize * 2];
+    if (L.length == L.maxSize) {//判断是否需要扩容
+        T *newData = new T[L.maxSize * 2];//创建长度翻倍的新数组。
         for (int i = 0; i < L.length; i++) {
-            newData[i] = L.data[i];
+            newData[i] = L.data[i];//复制原有元素。
         }
-        delete[] L.data;
-        L.data = newData;
-        L.maxSize *= 2;
+        delete[] L.data;//释放原有数组。
+        L.data = newData;//指向新数组地址。
+        L.maxSize *= 2;//最大长度翻倍。
     }
     for (int i = L.length; i >= pos; i--) {
-        L.data[i] = L.data[i - 1];
+        L.data[i] = L.data[i - 1];//数组元素后移
     }
     L.data[pos - 1] = val;
     L.length++;
@@ -41,7 +45,8 @@ bool InsertList(SeqList &L, int pos, int val) {
 }
 
 // 删除元素
-bool DeleteList(SeqList &L, int pos) {
+template<class T>
+bool DeleteList(SeqList<T> &L, int pos) {
     if (pos < 1 || pos > L.length) {
         return false;
     }
@@ -53,7 +58,8 @@ bool DeleteList(SeqList &L, int pos) {
 }
 
 // 查找元素
-int SearchList(SeqList L, int val) {
+template<class T>
+int SearchList(SeqList<T> L, int val) {
     for (int i = 0; i < L.length; i++) {
         if (L.data[i] == val) {
             return i + 1;
@@ -63,8 +69,9 @@ int SearchList(SeqList L, int val) {
 }
 
 int main() {
-    SeqList L;
-    int n, pos, val;
+    system("chcp 65001");//设置编码格式为UTF-8
+    SeqList<float> L;
+    float n, pos, val;
     cout << "请输入线性表长度：" << endl;
     cin >> n;
     CreateList(L, n);
