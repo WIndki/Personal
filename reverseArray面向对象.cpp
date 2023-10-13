@@ -34,6 +34,7 @@ public:
     {
         for (int i = 0; i < size_; i++)
         {
+            std::cout<<fixed<<setprecision(2);
             std::cout << data_[i] << " ";
         }
     }
