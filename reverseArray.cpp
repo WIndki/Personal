@@ -3,7 +3,7 @@
 using namespace std;
 
 template <typename I>
-void reverseArray(I array[], int size)
+void reverseArray(I *array, int size)
 {
     int left = 0;
     int right = size - 1;
@@ -18,7 +18,7 @@ void reverseArray(I array[], int size)
 }
 
 template <typename I>
-void ToOutputArray(I inputArray[],int size)
+void ToOutputArray(I *inputArray,int size)
 {
     for (int i = 0; i < size; i++)
     {
