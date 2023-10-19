@@ -130,13 +130,13 @@ public:
             }
             p = p->next;
         }
-        if (p1 != NULL)
-        {
-            p->next = p1;
-        }
-        if (p2 != NULL)
+        if (p1 == NULL) // 末尾结点切换
         {
             p->next = p2;
+        }
+        else if (p2 == NULL)
+        {
+            p->next = p1;
         }
     }
 };
