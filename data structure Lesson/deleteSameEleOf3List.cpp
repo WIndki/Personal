@@ -11,7 +11,6 @@ typedef struct {
     int listsize; // 当前分配的存储容量
 } SqList; // 定义顺序线性表类型
 
-// 初始化线性表
 void InitList(SqList &L) {
     //构造一个空的线性表L
     L.data = (int *) malloc(LIST_INIT_SIZE  *sizeof(int));
