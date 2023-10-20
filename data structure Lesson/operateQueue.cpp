@@ -27,12 +27,12 @@ public:
         data[rear] = x;
         rear = (rear + 1) % MAX_SIZE;
     }
-    
-    T dequeue() { // 出队操作
+
+    int dequeue() { // 出队操作
         T element;
         if (isEmpty()) {
             cout << "Queue is empty!" << endl;
-            return -1;
+            return 0;
         }else{
             element = data[front];
         }
@@ -40,14 +40,14 @@ public:
         return element;
     }
 
-    T getFront() { // 获取队头元素
+    int getFront() { // 获取队头元素
         if (isEmpty()) {
             cout << "Queue is empty!" << endl;
             return -1;
         }
         return data[front];
     }
-    T getRear() { // 获取队尾元素
+    int getRear() { // 获取队尾元素
         if (isEmpty()) {
             cout << "Queue is empty!" << endl;
             return -1;
@@ -62,9 +62,10 @@ public:
             cout << "Queue is empty!" << endl;
             return;
         }
-        cout << "Queue: ";
         for (int i = front; i != rear; i = (i + 1) % MAX_SIZE) {
-            cout << data[i] << " ";
+            cout << data[i];
+            if(i!=(rear-1+MAX_SIZE)%MAX_SIZE)//判断是否为最后一个元素
+                cout << " ";
         }
         cout << endl;
     }
@@ -72,14 +73,19 @@ public:
 
 int main() {
     Queue<int> q;
-    q.enqueue(1);
-    q.enqueue(2);
-    q.enqueue(3);
-    q.printQueue(); // 队列: 1 2 3
-    q.dequeue();
-    q.printQueue(); // 队列: 2 3
-    cout << "队头元素: " << q.getFront() << endl; // 队头元素: 2
-    cout << "队尾元素: " << q.getRear() << endl; // 队尾元素: 3
-    cout << "队列长度: " << q.getSize() << endl; // 队列长度: 2
+    int n;
+    while(cin>>n){
+        for(int i=0;i<n;i++){
+            int x;
+            cin>>x;
+            q.enqueue(x);
+        }
+        for(int i=0;i<n;i++){
+            cout<<q.dequeue();
+            if(i!=n-1)
+                cout<<" ";
+        }
+        cout<<endl;
+    }
     return 0;
 }
