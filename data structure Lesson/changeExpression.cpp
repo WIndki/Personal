@@ -71,6 +71,7 @@ void changeExpression(string s){
     while(!st.isEmpty()){
         cout << st.pop();//输出剩余符号
     }
+    cout<<endl;
 }
 
 int main() {
