@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int CHUNK_SIZE = 2; // 块的大小
+const int CHUNK_SIZE = 5; // 块的大小
 
 struct Chunk {
     char data[CHUNK_SIZE]; // 数据域
@@ -53,27 +53,12 @@ public:
             throw "Index out of range";
         }
         Chunk* p = head->next;
-        int k = i;
+        int k = i / CHUNK_SIZE;
+        i %= CHUNK_SIZE;
         while (k--) {
             p = p->next;
         }
-        return p->data[0];
-    }
-
-    void insert(int i, char c) {
-        if (i < 0 || i > length) {
-            throw "Index out of range";
-        }
-        Chunk* p = new Chunk();
-        p->data[0] = c;
-        Chunk* q = head->next;
-        int k = i-1;
-        while(k--){
-            q = q->next;
-        }
-        p->next = q->next;
-        q->next = p;
-        length++;
+        return p->data[i];
     }
 
     String& operator=(const char* s) {
@@ -182,10 +167,6 @@ int main() {
 
     s3[5] = ' ';
     s3.print(); // Output: Hello world
-
-    s3[5] = 'W';
-    s3.insert(5,' ');
-    s3.print(); // Output: Hello World
 
     return 0;
 }
