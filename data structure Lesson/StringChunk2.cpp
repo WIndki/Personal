@@ -1,139 +1,147 @@
 #include <iostream>
+#include <cassert>
 #include <cstring>
-
 using namespace std;
 
-class StringChunk {
+const int CHUNK_SIZE = 5; // 块的大小
+
+struct Chunk
+{
+    char data[CHUNK_SIZE]; // 数据域
+    Chunk *next;           // 指针域
+};
+
+class String
+{
 private:
-    char* data; // 存储串的字符数组
-    int length; // 串的长度
-    StringChunk* next; // 指向下一个结点的指针
+    Chunk *head, *tail;
+    int length;
+
 public:
-    StringChunk() { // 默认构造函数
-        data = nullptr;
+    String()
+    {
+        head = tail = new Chunk();
+        tail->next = NULL;
         length = 0;
-        next = nullptr;
-    }
-    StringChunk(const char* str) { // 带参构造函数
-        length = strlen(str);
-        data = new char[length + 1];
-        strcpy(data, str);
-        next = nullptr;
-    }
-    ~StringChunk() { // 析构函数
-        if (data != nullptr) {
-            delete[] data;
-            data = nullptr;
-        }
-        next = nullptr;
-    }
-    int getLength() { // 求串长
-        return length;
-    }
-    int compare(StringChunk* str) { // 串比较
-        int len1 = length, len2 = str->getLength();
-        int minLen = len1 < len2 ? len1 : len2;
-        for (int i = 0; i < minLen; i++) {
-            if (data[i] < str->data[i]) {
-                return -1;
-            } else if (data[i] > str->data[i]) {
-                return 1;
-            }
-        }
-        if (len1 == len2) {
-            return 0;
-        } else if (len1 < len2) {
-            return -1;
-        } else {
-            return 1;
-        }
-    }
-    StringChunk* operator+(StringChunk* str) { // 串连接
-        StringChunk* newChunk = new StringChunk();
-        newChunk->length = length + str->getLength();
-        newChunk->data = new char[newChunk->length + 1];
-        strcpy(newChunk->data, data);
-        strcat(newChunk->data, str->data);
-        return newChunk;
-    }
-    StringChunk* subString(int pos, int len) { // 串子串
-        if (pos < 0 || pos >= length || len <= 0 || pos + len > length) {
-            return nullptr;
-        }
-        StringChunk* newChunk = new StringChunk();
-        newChunk->length = len;
-        newChunk->data = new char[len + 1];
-        strncpy(newChunk->data, data + pos, len);
-        newChunk->data[len] = '\0';
-        return newChunk;
-    }
-    bool insert(int pos, StringChunk* str) { // 串插入
-        if (pos < 0 || pos > length) {
-            return false;
-        }
-        StringChunk* p = this;
-        while (pos > 0 && p != nullptr) {
-            p = p->next;
-            pos--;
-        }
-        if (p == nullptr) {
-            return false;
-        }
-        StringChunk* newChunk = new StringChunk();
-        newChunk->length = str->getLength();
-        newChunk->data = new char[newChunk->length + 1];
-        strcpy(newChunk->data, str->data);
-        newChunk->next = p->next;
-        p->next = newChunk;
-        return true;
-    }
-    bool deleteSubString(int pos, int len) { // 串删除
-        if (pos < 0 || pos >= length || len <= 0 || pos + len > length) {
-            return false;
-        }
-        StringChunk* p = this;
-        while (pos > 0 && p != nullptr) {
-            p = p->next;
-            pos--;
-        }
-        if (p == nullptr) {
-            return false;
-        }
-        StringChunk* q = p->next;
-        p->next = q->next;
-        delete q;
-        q = nullptr;
-        length -= len;
-        return true;
     }
 
-    void printString(){
-        cout << data << endl;
+    ~String()
+    {
+        Chunk *p = head;
+        while (p)
+        {
+            Chunk *q = p->next;
+            delete p;
+            p = q;
+        }
+    }
+
+    void clear()
+    {
+        Chunk *p = head->next;
+        while (p)
+        {
+            Chunk *q = p->next;
+            delete p;
+            p = q;
+        }
+        head->next = tail;
+        length = 0;
+    }
+
+    int size()
+    {
+        return length;
+    }
+
+    bool isEmpty()
+    {
+        return length == 0;
+    }
+
+    void push(char c)
+    {
+        Chunk *p = tail;
+        if (length % CHUNK_SIZE == 0)
+        {
+            p->next = new Chunk();
+            p = p->next;
+            p->next = NULL;
+            tail = p;
+        }
+        p->data[length % CHUNK_SIZE] = c;
+        length++;
+    }
+
+    void pop()
+    {
+        if (isEmpty())
+        {
+            throw "Empty";
+        }
+        Chunk *p = head->next;
+        int k = length / CHUNK_SIZE;
+        int i = length % CHUNK_SIZE;
+        if (i == 0)
+            k--, i = CHUNK_SIZE;
+        while (k--)
+        {
+            p = p->next;
+        }
+        p->data[i - 1] = '\0';
+        length--;
+    }
+
+    String &operator+(const String &s)
+    {
+        Chunk *p = s.head->next;
+        while (p)
+        {
+            for (int i = 0; i < CHUNK_SIZE && p->data[i]; i++)
+            {
+                push(p->data[i]);
+            }
+            p = p->next;
+        }
+        return *this;
+    }
+
+    String &operator=(const char *c)
+    {
+        clear();
+        int len = strlen(c);
+        for (int i = 0; i < len; i++)
+        {
+            push(c[i]);
+        }
+        return *this;
+    }
+
+    void printString()
+    {
+        Chunk *p = head->next;
+        while (p)
+        {
+            for (int i = 0; i < CHUNK_SIZE && p->data[i]; i++)
+            {
+                cout << p->data[i];
+            }
+            p = p->next;
+        }
+        cout << endl;
     }
 };
 
-int main() {
-    StringChunk* str1 = new StringChunk("Hello");
-    StringChunk* str2 = new StringChunk("World");
-    StringChunk* str3 = str1 + str2;
-    cout << "str1: " ;
-     str1->printString();
-    cout<< " " << str1->compare(str2) << endl;
-    cout << "str2: " ;
-    str2->printString(); 
-    cout<< " " << str2->compare(str1) << endl;
-    cout << "str3: " ;
-    str3->printString();
-    cout<< " " << str3->compare(str1) << " " << str3->compare(str2) << endl;
-    StringChunk* str4 = str3->subString(1, 8);
-    cout << "str4: " << str4->getLength() << endl;
-    str1->insert(2, str2);
-    cout << "str1: " << str1->getLength() << endl;
-    str3->deleteSubString(1, 5);
-    cout << "str3: " << str3->getLength() << endl;
-    delete str1;
-    delete str2;
-    delete str3;
-    delete str4;
+int main()
+{
+    String s1, s2;
+    s1 = "Hello";
+    s2 = "World";
+    String s3 = s1 + s2;
+    cout << s3.size() << endl;
+    s3.printString();
+    s3.pop();
+    cout << s3.size() << endl;
+    s3.printString();
     return 0;
 }
