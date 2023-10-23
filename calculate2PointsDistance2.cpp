@@ -7,7 +7,7 @@ class points{
     public:
     float x;
     float y;
-    float operator-(const points& B) const {
+    float operator-(const points& B) const {//重载-运算符
         float distance = sqrt(pow(x-B.x,2)+pow(y-B.y,2));
         return distance;
     }
