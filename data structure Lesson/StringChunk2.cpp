@@ -39,10 +39,11 @@ public:
     void clear()
     {
         Chunk *p = head->next;
+        Chunk *q;
         while (p){
-            Chunk *q = p->next;
-            delete p;
-            p = q;
+            p = p->next;
+            delete q;
+            q = p;
         }
         head->next = NULL;
         tail = head;
@@ -133,7 +134,7 @@ public:
 
     String &operator=(const char *c)
     {
-        clear();
+        // clear();
         int len = strlen(c);
         for (int i = 0; i < len; i++)
         {
@@ -236,24 +237,55 @@ public:
             return -1;
         }
     }
+
+    void SubString(String &Sub, const String &S, int pos, int len)
+{
+    Sub.clear();
+    Chunk *p = S.head->next;
+    int k = pos / CHUNK_SIZE;
+    int i = pos % CHUNK_SIZE;
+    while (k--)
+    {
+        p = p->next;
+    }
+    while (len && p)
+    {
+        for (; i < CHUNK_SIZE && len; i++, len--)
+        {
+            Sub.push(p->data[i]);
+        }
+        i = 0;
+        p = p->next;
+    }
+}
 };
+
 
 int main()
 {
+    // char s[20], t[20];
+    // int pos;
+    // cin>>s>>t>>pos;
+    // String s1, s2;
+    // s1 = "";
+    // s2 = "";
+    // s1.printString();
+    // s2.printString();
+    // String s3 = s1 + s2;
+    // s3.printString();
+    // s3 += "!!";
+    // s3.pop();
+    // s3.printString();
+    // cout << s3.KMP("World") << endl;
     String s1, s2;
-    s1 = "Hello";
-    s2 = "World";
-    String s3 = s1 + s2;
-    cout << s3.size() << endl;
-    s3.printString();
-    s3.pop();
-    cout << s3.size() << endl;
-    s3.printString();
-    String s4;
-    s4 = (s3 + "d");
-    s3 = s4;
-    s3.printString();
-    int pos = s3.KMP("l");
-    cout << pos << endl;
+    char s[18];
+    int start, len;
+    while(cin.getline(s, 18)){
+    cin>>start;
+    cin>>len;
+    s1 = s;
+    s2.SubString(s2, s1, start-1, len);
+    s2.printString();
+    }
     return 0;
 }
