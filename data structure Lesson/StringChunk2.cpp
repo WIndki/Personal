@@ -40,7 +40,8 @@ public:
     {
         Chunk *p = head->next;
         Chunk *q;
-        while (p){
+        while (p)
+        {
             p = p->next;
             delete q;
             q = p;
@@ -130,7 +131,6 @@ public:
         res += c;
         return res;
     }
-
 
     String &operator=(const char *c)
     {
@@ -239,27 +239,26 @@ public:
     }
 
     void SubString(String &Sub, const String &S, int pos, int len)
-{
-    Sub.clear();
-    Chunk *p = S.head->next;
-    int k = pos / CHUNK_SIZE;
-    int i = pos % CHUNK_SIZE;
-    while (k--)
     {
-        p = p->next;
-    }
-    while (len && p)
-    {
-        for (; i < CHUNK_SIZE && len; i++, len--)
+        Sub.clear();
+        Chunk *p = S.head->next;
+        int k = pos / CHUNK_SIZE;
+        int i = pos % CHUNK_SIZE;
+        while (k--)
         {
-            Sub.push(p->data[i]);
+            p = p->next;
         }
-        i = 0;
-        p = p->next;
+        while (len && p)
+        {
+            for (; i < CHUNK_SIZE && len; i++, len--)
+            {
+                Sub.push(p->data[i]);
+            }
+            i = 0;
+            p = p->next;
+        }
     }
-}
 };
-
 
 int main()
 {
@@ -278,14 +277,14 @@ int main()
     // s3.printString();
     // cout << s3.KMP("World") << endl;
     String s1, s2;
-    char s[18];
-    int start, len;
-    while(cin.getline(s, 18)){
-    cin>>start;
-    cin>>len;
+    char s[100];
+    cin.getline(s, 100);
+    int len = 2;
+    int start = 6;
+    scanf("%d", &start);
+    scanf("%d", &len);
     s1 = s;
-    s2.SubString(s2, s1, start-1, len);
+    s2.SubString(s2, s1, start - 1, len);
     s2.printString();
-    }
     return 0;
 }

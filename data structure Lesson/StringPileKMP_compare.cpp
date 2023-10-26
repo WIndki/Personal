@@ -189,13 +189,17 @@ public:
 
 int main()
 {
-    String s1,s2;
-    char s1_[30];
-    int pos,length;
-    cin.getline(s1_,30);
-    cin>>pos>>length;
-    s1=s1_;
-    s1.SubString(s2,pos-1,length);
-    s2.printString();
+    int count = 2;
+    while (count != 0)
+    {
+        String s1, s2;
+        char s1_[30], s2_[30];
+        cin.getline(s1_, 30);
+        cin.getline(s2_, 30);
+        s1 = s1_;
+        int pos = s1.KMP(s2_);
+        cout << pos << endl;
+        count--;
+    }
     return 0;
 }

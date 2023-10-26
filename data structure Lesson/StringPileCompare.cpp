@@ -189,13 +189,12 @@ public:
 
 int main()
 {
-    String s1,s2;
-    char s1_[30];
-    int pos,length;
-    cin.getline(s1_,30);
-    cin>>pos>>length;
-    s1=s1_;
-    s1.SubString(s2,pos-1,length);
-    s2.printString();
+        String s1, s2;
+        char s1_[30], s2_[30];
+        cin.getline(s1_, 30);
+        cin.getline(s2_, 30);
+        s1 = s1_;
+        int value = s1.compare(s2_);
+        cout << value << endl;
     return 0;
 }
