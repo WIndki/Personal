@@ -1,43 +1,60 @@
 #include <iostream>
 using namespace std;
 
-bool isEquation(int data[10]){
-    int first = data[0];
-    for(int i = 1; i < 10; i++){
-        if(data[i] != first && data[i] != 0){
-            return 0;
+bool allElementsSame(int arr[])
+{
+    for (int i = 1; i < 10; i++)
+    {
+        if (arr[i] != arr[0])
+        {
+            return false;
         }
     }
-    return 1;
+    return true;
 }
 
-void giveCandy(int *data){
-    int value=0;
-    int temp[11]={0};
-    for(int i =0;i<10;i++){
-        temp[i]=data[i]/2;
-        data[i]=data[i]/2;
-    }
-    for(int i =0;i<9;i++){
-        data[i+1]+=temp[i];
-    }
-    data[0]+=temp[9];
-    for(int i =0;i<9;i++){
-        if(data[i]%2!=0){
-            data[i]++;
+void giveCandy(int data[])
+{
+    int temp[10];
+    for (int i = 0; i < 10; i++)
+    {
+        if (data[i] % 2 == 0)
+        {
+            temp[i] = data[i] = data[i] / 2;
+        }
+        else
+        {
+            temp[i] = data[i] = (data[i] + 1) / 2;
         }
     }
+    for (int i = 1; i < 10; i++)
+    {
+        data[i] += temp[i - 1];
+    }
+    data[0] += temp[9];
 }
 
-int main(){
-    int data[10] = {0};
-    int count = 0;
-    for(int i=0;i<10;i++){
-        cin>>data[i];
+int main()
+{
+    int candy[10];
+    while (cin >> candy[0])
+    {
+        int count = 0;
+        for (int i = 1; i < 10; i++)
+        {
+            cin >> candy[i];
+        }
+        while (!allElementsSame(candy))
+        {
+            // cout << count <<": ";
+            // for(int i=0;i<10;i++)cout<<candy[i]<<" ";
+            // cout << endl;
+            giveCandy(candy);
+            count++;
+        }
+        // cout << count <<": ";
+        // for(int i=0;i<10;i++)cout<<candy[i]<<" ";
+        // cout << endl;
+        cout << count << " " << candy[0] << endl;
     }
-    while(isEquation(data)==0){
-        giveCandy(data);
-        count++;
-    }
-    cout<<count<<" "<<data[0];
 }

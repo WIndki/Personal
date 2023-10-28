@@ -102,6 +102,21 @@ public:
         }
         strncpy(str + pos, s, len);
     }
+    int compare(FixedString &s2)
+    {
+        // 比较字符串
+        int len1 = strlen(str);
+        int len2 = strlen(s2.str);
+        int len = len1 < len2 ? len1 : len2;
+        for (int i = 0; i < len; i++)
+        {
+            if (str[i] != s2.str[i])
+            {
+                return str[i] - s2.str[i];
+            }
+        }
+        return len1 - len2;
+    }
 };
 
 int main()
@@ -111,9 +126,7 @@ int main()
     FixedString s1(input1);           // 创建带参串
     char input2[MAX_LEN + 1];         // 定义输入缓冲区
     cin.getline(input2, MAX_LEN + 1); // 读入字符串
-    int pos;
-    cin >> pos;
-    s1.insert(pos - 1, input2); // 插入串
-    s1.print();                 // 输出带参串
+    FixedString s2(input2);           // 创建带参串
+    cout << s1.compare(s2);   // 比较字符串
     return 0;
 }

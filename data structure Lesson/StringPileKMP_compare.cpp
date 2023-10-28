@@ -1,7 +1,60 @@
 #include <iostream>
-#include <cassert>
-#include <cstring>
 using namespace std;
+
+size_t strlen(const char *str)
+{
+    size_t len = 0;
+    while (*str++)
+    {
+        ++len;
+    }
+    return len;
+}
+
+char *strcpy(char *dest, const char *src)
+{
+    char *ret = dest;
+    while ((*dest++ = *src++) != '\0')
+        ;
+    return ret;
+}
+
+char *strcat(char *dest, const char *src)
+{
+    char *ret = dest;
+    while (*dest)
+    {
+        ++dest;
+    }
+    while ((*dest++ = *src++) != '\0')
+        ;
+    return ret;
+}
+
+char *strncpy(char *strDest, const char *strSrc, int num)
+{
+    char *strDestcopy = strDest;
+    while ((num--) && (*strDest++ = *strSrc++) != '\0')
+        ;
+    if (num > 0)
+    {
+        while (--num)
+        {
+            *strDest++ = '\0';
+        }
+    }
+    return strDestcopy;
+}
+
+int strcmp(const char *s1, const char *s2)
+{
+    while (*s1 && *s2 && (*s1 == *s2))
+    {
+        ++s1;
+        ++s2;
+    }
+    return *s1 - *s2;
+}
 
 class String
 {
