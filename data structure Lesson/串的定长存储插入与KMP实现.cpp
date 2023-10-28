@@ -81,6 +81,21 @@ public:
         }
         strncpy(str + pos, s, len);
     }
+    FixedString substr(int pos, int len) const
+    {
+        FixedString sub;
+        if (pos < 0)
+            pos = 0;
+        if (pos > strlen(str))
+            pos = strlen(str);
+        if (len < 0)
+            len = 0;
+        if (pos + len > strlen(str))
+            len = strlen(str) - pos;
+        strncpy(sub.str, str + pos, len);
+        sub.str[len] = '\0';
+        return sub;
+    }
     int kmp(const char *pattern) const
     {
         int n = strlen(str);
@@ -132,6 +147,6 @@ int main()
     cin >> pos;
     s1.insert(pos - 1, input2); // 插入串
     s1.print();                 // 输出带参串
-    cout<<s1.kmp("program");          // KMP算法
+    cout << s1.kmp("program");  // KMP算法
     return 0;
 }
