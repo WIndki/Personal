@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 using namespace std;
 
 size_t strlen(const char *str)
@@ -19,22 +20,11 @@ char *strcpy(char *dest, const char *src)
     return ret;
 }
 
-char *strcat(char *dest, const char *src)
-{
-    char *ret = dest;
-    while (*dest)
-    {
-        ++dest;
-    }
-    while ((*dest++ = *src++) != '\0')
-        ;
-    return ret;
-}
-
 char *strncpy(char *strDest, const char *strSrc, int num)
 {
     char *strDestcopy = strDest;
-    while ((num--) && (*strDest++ = *strSrc++) != '\0');
+    while ((num--) && (*strDest++ = *strSrc++) != '\0')
+        ;
     if (num > 0)
     {
         while (--num)
@@ -43,16 +33,6 @@ char *strncpy(char *strDest, const char *strSrc, int num)
         }
     }
     return strDestcopy;
-}
-
-int strcmp(const char *s1, const char *s2)
-{
-    while (*s1 && *s2 && (*s1 == *s2))
-    {
-        ++s1;
-        ++s2;
-    }
-    return *s1 - *s2;
 }
 
 void *memset(void *s, int c, size_t n)
@@ -101,6 +81,44 @@ public:
         }
         strncpy(str + pos, s, len);
     }
+    int kmp(const char *pattern) const
+    {
+        int n = strlen(str);
+        int m = strlen(pattern);
+        if (m == 0)
+            return 0;
+        if (n < m)
+            return -1;
+
+        // Compute the failure function
+        int *f = new int[m];
+        f[0] = -1;
+        for (int i = 1, j = -1; i < m; i++)
+        {
+            while (j >= 0 && pattern[j + 1] != pattern[i])
+                j = f[j];
+            if (pattern[j + 1] == pattern[i])
+                j++;
+            f[i] = j;
+        }
+
+        // Perform the search
+        for (int i = 0, j = -1; i < n; i++)
+        {
+            while (j >= 0 && pattern[j + 1] != str[i])
+                j = f[j];
+            if (pattern[j + 1] == str[i])
+                j++;
+            if (j == m - 1)
+            {
+                delete[] f;
+                return i - m + 1;
+            }
+        }
+
+        delete[] f;
+        return -1;
+    }
 };
 
 int main()
@@ -114,5 +132,6 @@ int main()
     cin >> pos;
     s1.insert(pos - 1, input2); // 插入串
     s1.print();                 // 输出带参串
+    cout<<s1.kmp("program");          // KMP算法
     return 0;
 }
