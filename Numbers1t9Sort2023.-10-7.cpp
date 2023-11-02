@@ -31,6 +31,7 @@ bool mynext_permutation(T *start, T *end) { //[start,end)
 	return true; 
 }
 
+
 void generateAndOutputExpressions() {
     int digits[9];
     for(int i=1;i<=9;i++){
@@ -60,7 +61,7 @@ void generateAndOutputExpressions() {
             }
             
     }
-    }while(next_permutation(digits,digits+9));
+    }while(mynext_permutation(digits,digits+9));
     cout <<"Total of " << count << " Expressions."<<endl;
     delete[] arr;
 }
