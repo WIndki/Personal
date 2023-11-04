@@ -50,7 +50,8 @@ public:
     }
     void print()
     {
-        cout <<"("<<fixed<<setprecision(2)<<real <<","<<fixed<<setprecision(2)<<imaginary <<"i)"<< endl;
+        cout<<fixed<<setprecision(2);
+        cout <<"("<<real <<","<<imaginary <<"i)"<< endl;
     }
 };
 
