@@ -17,6 +17,25 @@ public:
         height = h;
         volume = a * h;
     }
+    void triangle(double side1, double side2, double side3, double h)
+    {
+        double p = (side1 + side2 + side3) / 2;
+        bottom_area = sqrt(p * (p - side1) * (p - side2) * (p - side3));
+        height = h;
+        volume = bottom_area * h;
+    }
+    void rectangle(double length, double width, double h)
+    {
+        bottom_area = length * width;
+        height = h;
+        volume = bottom_area * h;
+    }
+    void circle(double radius, double h)
+    {
+        bottom_area = M_PI * radius * radius;
+        height = h;
+        volume = bottom_area * h;
+    }
     ~straight_cylinder()
     {
         bottom_area = 0;
@@ -36,6 +55,7 @@ int main()
     {
         double area;
         double h;
+        straight_cylinder sc;
         switch (op)
         {
         case 0:
@@ -43,6 +63,7 @@ int main()
             double radius;
             cin >> radius >> h;
             area = M_PI * radius * radius;
+            sc.circle(radius, h);
             break;
         }
         case 1:
@@ -51,6 +72,7 @@ int main()
             cin >> edge1 >> edge2 >> edge3 >> h;
             double p = (edge1 + edge2 + edge3) / 2;
             area = sqrt(p * (p - edge1) * (p - edge2) * (p - edge3));
+            sc.triangle(edge1, edge2, edge3, h);
             break;
         }
         case 2:
@@ -58,10 +80,10 @@ int main()
             double length, width;
             cin >> length >> width >> h;
             area = length * width;
+            sc.rectangle(length, width, h);
             break;
         }
         }
-        straight_cylinder sc(area, h);
         cout << fixed << setprecision(2) << sc.get_volume() << endl;
     }
     return 0;
