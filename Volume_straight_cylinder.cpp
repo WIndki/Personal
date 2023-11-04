@@ -1,19 +1,27 @@
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 using namespace std;
 
 class straight_cylinder
 {
 private:
-    double area;
+    double bottom_area;
     double height;
     double volume;
+
 public:
-    straight_cylinder(double a=0, double h)
+    straight_cylinder(double a = 0, double h = 0)
     {
-        area = a;
+        bottom_area = a;
         height = h;
-        volume = a*h;
+        volume = a * h;
+    }
+    ~straight_cylinder()
+    {
+        bottom_area = 0;
+        height = 0;
+        volume = 0;
     }
     double get_volume()
     {
@@ -21,34 +29,40 @@ public:
     }
 };
 
-int main(){
+int main()
+{
     int op;
-    while(cin>>op){
-        if(op==0){
+    while (cin >> op)
+    {
+        double area;
+        double h;
+        switch (op)
+        {
+        case 0:
+        {
             double radius;
-            double h=0;
-            cin>>radius>>h;
-            double radius_area = 3.141592653589793238*radius*radius;
-            straight_cylinder sc(radius_area, h);
-            cout<<fixed<<setprecision(2)<<sc.get_volume()<<endl;
+            cin >> radius >> h;
+            area = M_PI * radius * radius;
+            break;
         }
-        else if(op==1){
-            double edge1,edge2,edge3;
-            double h=0;
-            cin>>edge1>>edge2>>edge3>>h;
-            double p = (edge1+edge2+edge3) / 2; 
-            double area = sqrt(p * (p - edge1) * (p - edge2) * (p - edge3));
-            straight_cylinder sc2(area, h);
-            cout<<fixed<<setprecision(2)<<sc2.get_volume()<<endl;
+        case 1:
+        {
+            double edge1, edge2, edge3;
+            cin >> edge1 >> edge2 >> edge3 >> h;
+            double p = (edge1 + edge2 + edge3) / 2;
+            area = sqrt(p * (p - edge1) * (p - edge2) * (p - edge3));
+            break;
         }
-        else if(op==2){
+        case 2:
+        {
             double length, width;
-            double h=0;
-            cin>>length>>width>>h;
-            double area2 = length*width;
-            straight_cylinder sc3(area2, h);
-            cout<<fixed<<setprecision(2)<<sc3.get_volume()<<endl;
+            cin >> length >> width >> h;
+            area = length * width;
+            break;
         }
+        }
+        straight_cylinder sc(area, h);
+        cout << fixed << setprecision(2) << sc.get_volume() << endl;
     }
     return 0;
 }
