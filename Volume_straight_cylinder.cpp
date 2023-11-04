@@ -1,6 +1,5 @@
 #include <iostream>
 #include <iomanip>
-#include <cmath>
 using namespace std;
 
 class straight_cylinder
@@ -10,7 +9,7 @@ private:
     double height;
     double volume;
 public:
-    straight_cylinder(double a, double h)
+    straight_cylinder(double a=0, double h)
     {
         area = a;
         height = h;
@@ -29,7 +28,7 @@ int main(){
             double radius;
             double h=0;
             cin>>radius>>h;
-            double radius_area = M_PI*radius*radius;
+            double radius_area = 3.141592653589793238*radius*radius;
             straight_cylinder sc(radius_area, h);
             cout<<fixed<<setprecision(2)<<sc.get_volume()<<endl;
         }
