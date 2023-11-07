@@ -39,7 +39,7 @@ void generateAndOutputExpressions() {
     }
     int count = 0;
     int count1 = 0;
-    int *arr = new int[count+1]();
+    int *arr = new int[200]();
     do{
         if (isExpressionValid(digits)) {
             int num1 = digits[0] * 100 + digits[1] * 10 + digits[2];
