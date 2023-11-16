@@ -61,26 +61,21 @@ public:
         rows = cols;
         cols = temp;
     }
-    Matrix add(Matrix a, Matrix b)
+    void add(Matrix b)
     {
-        if (a.rows != b.rows || a.cols != b.cols)
-        {
-            cout << "Error: The two matrices have different sizes." << endl;
-            return Matrix(0, 0);
-        }
-        Matrix c(a.rows, a.cols);
+        Matrix c(rows, cols);
         int i = 0, j = 0, k = 0;
-        while (i < a.nums && j < b.nums)
+        while (i < nums && j < b.nums)
         {
-            if (a.data[i].row < b.data[j].row || (a.data[i].row == b.data[j].row && a.data[i].col < b.data[j].col))
+            if (data[i].row < b.data[j].row || (data[i].row == b.data[j].row && data[i].col < b.data[j].col))
             {
-                c.data[k].row = a.data[i].row;
-                c.data[k].col = a.data[i].col;
-                c.data[k].value = a.data[i].value;
+                c.data[k].row = data[i].row;
+                c.data[k].col = data[i].col;
+                c.data[k].value = data[i].value;
                 i++;
                 k++;
             }
-            else if (a.data[i].row > b.data[j].row || (a.data[i].row == b.data[j].row && a.data[i].col > b.data[j].col))
+            else if (data[i].row > b.data[j].row || (data[i].row == b.data[j].row && data[i].col > b.data[j].col))
             {
                 c.data[k].row = b.data[j].row;
                 c.data[k].col = b.data[j].col;
@@ -90,19 +85,19 @@ public:
             }
             else
             {
-                c.data[k].row = a.data[i].row;
-                c.data[k].col = a.data[i].col;
-                c.data[k].value = a.data[i].value + b.data[j].value;
+                c.data[k].row = data[i].row;
+                c.data[k].col = data[i].col;
+                c.data[k].value = data[i].value + b.data[j].value;
                 i++;
                 j++;
                 k++;
             }
         }
-        while (i < a.nums)
+        while (i < nums)
         {
-            c.data[k].row = a.data[i].row;
-            c.data[k].col = a.data[i].col;
-            c.data[k].value = a.data[i].value;
+            c.data[k].row = data[i].row;
+            c.data[k].col = data[i].col;
+            c.data[k].value = data[i].value;
             i++;
             k++;
         }
@@ -115,7 +110,7 @@ public:
             k++;
         }
         c.nums = k;
-        return c;
+        for(int i=0;i<c.nums;i++)data[i] = c.data[i];
     }
 
     void print()
@@ -162,17 +157,9 @@ int main(){
             }
         }
         Matrix a(rows,cols,a_nums,a_data,a_rowptr,a_colptr);
-        a.print();
         Matrix b(rows,cols,b_nums,b_data,b_rowptr,b_colptr);
-        b.print();
-        Matrix c = c.add(a,b);
-        c.print();
+        a.add(b);
+        a.print();
     }
     return 0;
 }
-3 3
-2 2
-1 2 1
-1 1 1
-1 1 1
-2 2 1
