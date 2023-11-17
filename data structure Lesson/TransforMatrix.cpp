@@ -61,30 +61,6 @@ public:
         rows = cols;
         cols = temp;
     }
-    void Add(Matrix &b)
-    {
-        int k = 0;
-        Tupnode c[5];
-        for (int i = 0; i < nums; i++)
-        {
-            for (int j = 0; j < b.nums; j++)
-            {
-                if (data[i].row == b.data[j].row && data[i].col == b.data[j].col)
-                {
-                    c[k].row = data[i].row;
-                    c[k].col = data[i].col;
-                    c[k].value = data[i].value + b.data[j].value;
-                    k++;
-                }
-            }
-        }
-        for (int i = 0; i < nums; i++)
-        {
-            data[i].row = c[i].row;
-            data[i].col = c[i].col;
-            data[i].value = c[i].value;
-        }
-    }
     void print()
     {
         int k = 0;
