@@ -9,12 +9,26 @@ struct BiTNode
     BiTNode() : data(), left(nullptr), right(nullptr) {}
 };
 
-BiTNode *createBinaryTree(char values[], int size) //队列实现
+void cleanTree(BiTNode *&root)
 {
-    // if (values[0]=='0') {
-    //     return nullptr;
-    // }
+    if (root == nullptr)
+    {
+        return;
+    }
+    else if (root->data == '0')
+    {
+        root = nullptr;
+        return;
+    }
+    else
+    {
+        cleanTree(root->left);
+        cleanTree(root->right);
+    }
+}
 
+BiTNode *createBinaryTree(char values[], int size)//队列创建完全二叉树
+{
     BiTNode *root = new BiTNode(values[0]);
     queue<BiTNode *> q;
     q.push(root);
@@ -24,29 +38,19 @@ BiTNode *createBinaryTree(char values[], int size) //队列实现
     {
         BiTNode *curr = q.front();
         q.pop();
-
-        int leftVal = values[i++];
-        if (leftVal != '0')
-        {
-            curr->left = new BiTNode(leftVal);
-            q.push(curr->left);
-        }
-
-        if (i < size)
-        {
-            int rightVal = values[i++];
-            if (rightVal != '0')
-            {
-                curr->right = new BiTNode(rightVal);
-                q.push(curr->right);
-            }
-        }
+        //管他是不是0，先创建出来再说
+        char leftVal = values[i++];
+        curr->left = new BiTNode(leftVal);
+        q.push(curr->left);
+        char rightVal = values[i++];
+        curr->right = new BiTNode(rightVal);
+        q.push(curr->right);
     }
-
+    cleanTree(root);//把data是0的孩子的直接删了
     return root;
 }
 
-void createFullBT_DFS(BiTNode *root, char numbers[], int len, int i) //递归实现
+void createFullBT_DFS(BiTNode *root, char numbers[], int len, int i)//递归创建完全二叉树
 {
     if (i <= len)
     {
