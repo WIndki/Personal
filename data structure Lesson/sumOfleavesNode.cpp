@@ -9,7 +9,7 @@ struct BiTNode
     BiTNode() : data(), left(nullptr), right(nullptr) {}
 };
 
-BiTNode *createBinaryTree(char values[], int size)
+BiTNode *createBinaryTree(char values[], int size) //队列实现
 {
     // if (values[0]=='0') {
     //     return nullptr;
@@ -46,7 +46,7 @@ BiTNode *createBinaryTree(char values[], int size)
     return root;
 }
 
-void createFullBT_DFS(BiTNode *root, char numbers[], int len, int i)
+void createFullBT_DFS(BiTNode *root, char numbers[], int len, int i) //递归实现
 {
     if (i <= len)
     {
