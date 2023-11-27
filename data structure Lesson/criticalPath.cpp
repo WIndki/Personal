@@ -42,9 +42,9 @@ public:
         {
             char a, b;
             int c;
-        cin >> a >> b >> c;
-        int a_ = find(nodes.begin(), nodes.end(), a) - nodes.begin();
-        int b_ = find(nodes.begin(), nodes.end(), b) - nodes.begin();
+            cin >> a >> b >> c;
+            int a_ = find(nodes.begin(), nodes.end(), a) - nodes.begin();
+            int b_ = find(nodes.begin(), nodes.end(), b) - nodes.begin();
             ArcNode *p = new ArcNode;
             p->adjvex = b_;
             p->weight = c;
@@ -68,7 +68,7 @@ public:
         }
     }
 
-     void criticalPath()
+    void criticalPath()
     {
         int inDegree[vexnum]; // inDegree[i]表示顶点i的入度
         memset(inDegree, 0, sizeof(inDegree));
@@ -169,9 +169,6 @@ public:
         cout << shortestTime << endl;
     }
 };
-
-
-
 
 int main()
 {

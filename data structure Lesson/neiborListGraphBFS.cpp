@@ -105,7 +105,7 @@ public:
                 {
                     int vertex = q.front();
                     q.pop();
-                    output[count]=V[vertex].data;
+                    output[count] = V[vertex].data;
                     count++;
                     ArcNode *p = V[vertex].first;
                     while (p)
@@ -121,13 +121,15 @@ public:
                 }
             }
         }
-        for(int i = 0 ; i < vexnum ; i++){
-            cout<<output[i];
-            if(i<vexnum-1){
-                cout<<" ";
+        for (int i = 0; i < vexnum; i++)
+        {
+            cout << output[i];
+            if (i < vexnum - 1)
+            {
+                cout << " ";
             }
         }
-        cout<<endl;
+        cout << endl;
     }
 };
 
