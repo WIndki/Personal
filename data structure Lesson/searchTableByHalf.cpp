@@ -1,27 +1,55 @@
 //二分法查找
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
-vector<int> createVector(int nums){
-    vector<int> v;
+struct node{
+    int data;
+    int pos;
+};
+vector<node> createVector(int nums){
+    vector<node> v;
     for(int i = 0; i < nums; i++){
-        int temp;
+        node temp;
         cout<<"data["<<i<<"]=";
-        cin >> temp;
+        cin >> temp.data;
+        temp.pos = i;
         v.push_back(temp);
     }
     return v;
 }
 
-void printVector(vector<int> v){
-    for(vector<int>::iterator it = v.begin(); it != v.end(); it++){
-        cout << *it << " ";
+void printVector(vector<node> v){
+    for(vector<node>::iterator it = v.begin(); it != v.end(); it++){
+        cout << it->data << " ";
     }
     cout << endl;
 }
 
-void searchTable(vector<int> v){
+void searchTable(vector<node> l){
+    int target;
+    cout<<"search key=";
+    cin >> target;
+    for(int i =0;i<l.size();i++){
+        if(l[i].data == target){
+            cout <<"Find it. data["<< l[i].pos <<"]="<<target<< endl;
+            return;
+        }
+    }
+    cout << "Not Found" << endl;
+}
+
+void HalfsearchTable(vector<node> v){
+    for(int i = 0; i < v.size(); i++){
+        for(int j = i + 1; j < v.size(); j++){
+            if(v[i].data > v[j].data){
+                node temp = v[i];
+                v[i] = v[j];
+                v[j] = temp;
+            }
+        }
+    }
     int target;
     cout<<"search key=";
     cin >> target;
@@ -30,10 +58,10 @@ void searchTable(vector<int> v){
     int high = v.size() - 1;
     while(low <= high){
         int mid = (low + high) / 2;
-        if(v[mid] == target){
-            cout <<"Find it. data["<< mid <<"]="<<target<< endl;
+        if(v[mid].data == target){
+            cout <<"Halfsearch Find it. data["<< v[mid].pos <<"]="<<target<< endl;
             return;
-        }else if(v[mid] > target){
+        }else if(v[mid].data > target){
             high = mid - 1;
         }else{
             low = mid + 1;
@@ -46,8 +74,9 @@ int main(){
     int nums;
     cout<<"total=";
     cin >> nums;
-    vector<int> v = createVector(nums);
+    vector<node> v = createVector(nums);
     printVector(v);
     searchTable(v);
+    HalfsearchTable(v);
     return 0;
 }
