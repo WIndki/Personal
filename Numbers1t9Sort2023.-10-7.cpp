@@ -9,10 +9,26 @@ bool isExpressionValid(int* digits) {
     return (num1 + num2 == num3);
 }
 
+// bool isAppeared(int *arr, int num2, int count){
+//     for(int i=0;i<count;i++){
+//         if(arr[i]==num2){
+//             return 1;
+//         }
+//     }
+//     return 0;
+// }
+
 bool isAppeared(int *arr, int num2, int count){
-    for(int i=0;i<count;i++){
-        if(arr[i]==num2){
+    int low = 0;
+    int high = count-1;
+    while(low<=high){
+        int mid = (low+high)/2;
+        if(arr[mid]==num2){
             return 1;
+        }else if(arr[mid]>num2){
+            high = mid-1;
+        }else{
+            low = mid+1;
         }
     }
     return 0;

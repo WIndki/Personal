@@ -1,22 +1,52 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
-int main() {
-    string str;
-    while (getline(cin, str)) {
-        int sum = 0;
-        int num = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (isdigit(str[i])) {
-                num = num * 10 + (str[i] - '0');
-            } else {
-                sum += num;
-                num = 0;
+class matrix{
+    private:
+            int row;
+            int col;
+            int **mat;
+    public:
+            matrix(int r=0,int c=0){
+                row=r;
+                col=c;
+                mat=new int*[row];
+                for(int i=0;i<row;i++){
+                    mat[i]=new int[col];
+                }
             }
-        }
-        sum += num;
-        cout << sum << endl;
-    }
-    return 0;
-}
+            ~matrix(){
+                for(int i=0;i<row;i++){
+                    delete [] mat[i];
+                }
+                delete [] mat;
+            }
+            void input(){
+                for(int i=0;i<row;i++){
+                    for(int j=0;j<col;j++){
+                        cin>>mat[i][j];
+                    }
+                }
+            }
+            void display(){
+                for(int i=0;i<row;i++){
+                    for(int j=0;j<col;j++){
+                        cout<<mat[i][j]<<" ";
+                    }
+                    cout<<endl;
+                }
+            }
+            matrix operator*(const matrix &m){
+                matrix temp(row,m.col);
+                for(int i=0;i<row;i++){
+                    for(int j=0;j<m.col;j++){
+                        temp.mat[i][j]=0;
+                        for(int k=0;k<col;k++){
+                            temp.mat[i][j]+=mat[i][k]*m.mat[k][j];
+                        }
+                    }
+                }
+                return temp;
+            }
+                   
+};

@@ -39,17 +39,20 @@ void searchTable(vector<node> l){
     }
     cout << "Not Found" << endl;
 }
-
+bool compare(node a, node b){
+    return a.data < b.data;
+}
 void HalfsearchTable(vector<node> v){
-    for(int i = 0; i < v.size(); i++){
-        for(int j = i + 1; j < v.size(); j++){
-            if(v[i].data > v[j].data){
-                node temp = v[i];
-                v[i] = v[j];
-                v[j] = temp;
-            }
-        }
-    }
+    // for(int i = 0; i < v.size(); i++){
+    //     for(int j = i + 1; j < v.size(); j++){
+    //         if(v[i].data > v[j].data){
+    //             node temp = v[i];
+    //             v[i] = v[j];
+    //             v[j] = temp;
+    //         }
+    //     }
+    // }
+    sort(v.begin(), v.end(), compare);
     int target;
     cout<<"search key=";
     cin >> target;
