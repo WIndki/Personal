@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
 class Graph {
@@ -17,6 +16,13 @@ public:
                 adjacencyMatrix[i][j] = 0;
             }
     }
+    }
+
+    ~Graph() {
+        for (int i = 0; i < numVertices; i++) {
+            delete[] adjacencyMatrix[i];
+        }
+        delete[] adjacencyMatrix;
     }
 
     void addEdge(int u, int v) {
@@ -37,10 +43,19 @@ public:
     }
 };
 
+int locate(char *nodes,int numNodes, char node) {
+    for (int i = 0; i < numNodes; i++) {
+        if (nodes[i] == node) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int main() {
     int n;
-    while(cin>>n){
-    for (int i = 0; i < n; i++) {
+    cin>>n;
+    while(n--){
         int numNodes, numEdges;
         cin >> numNodes >> numEdges;
         Graph graph(numNodes);
@@ -56,12 +71,11 @@ int main() {
             cin >> v;
 
             while (v != -1) {
-                graph.addEdge(u - 'a', v);
+                graph.addEdge(locate(nodes,numNodes,u), v);
                 cin >> v;
             }
         }
         graph.printMatrix();
-    }
     }
 
     return 0;

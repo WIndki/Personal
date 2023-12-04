@@ -37,8 +37,8 @@ public:
         {
             char a, b;
             cin >> a >> b;
-            int a_ = a - 'a';
-            int b_ = b - 'a';
+            int a_ = locate(a);
+            int b_ = locate(b);
             ArcNode *p = new ArcNode;
             p->adjvex = b_;
             p->next = V[a_].first;
@@ -48,6 +48,13 @@ public:
             q->next = V[b_].first;
             V[b_].first = q;
         }
+    }
+    int locate(char c){
+        for(int i=0;i<vexnum;i++){
+            if(V[i].data==c)
+                return i;
+        }
+        return -1;
     }
     void print()
     {
@@ -70,13 +77,12 @@ public:
 int main()
 {
     int n;
-    while(cin>>n){
-    for(int i=0;i<n;i++){
+    cin>>n;
+    while(n--){
     int vexnum, arcnum;
     cin >> vexnum >> arcnum;
     Graph G(vexnum, arcnum);
     G.print();
-    }
     }
     return 0;
 }

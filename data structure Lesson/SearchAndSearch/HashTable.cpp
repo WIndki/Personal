@@ -2,7 +2,7 @@
 #include <vector>
 
 using namespace std;
-
+int skey;
 // 哈希表类
 class HashTable
 {
@@ -28,7 +28,7 @@ HashTable::HashTable(int size)
 // 哈希函数
 int HashTable::hashFunc(int key)
 {
-    return key % size;
+    return key % skey;
 }
 
 // 插入数据
@@ -90,12 +90,10 @@ void HashTable::print()
 int main()
 {
     int n;
-    while (cin >> n)
-    {
-        for (int i = 0; i < n; i++)
-        {
-            int r, s, t;
-            cin >> r >> s >> t;
+    cin>>n;
+    while (n--){
+            int r, t;
+            cin >> r >> skey >> t;
             HashTable hashTable(r);
             for (int i = 0; i < t; i++)
             {
@@ -115,7 +113,6 @@ int main()
                     cout << " ";
             }
             cout << endl;
-        }
-    }
+}
     return 0;
 }
