@@ -194,3 +194,22 @@ void MergeList(LinkedList<int> &list1,
     j++;
   }
 }
+
+LinkedList<int> FindSame(LinkedList<int> &list1, LinkedList<int> &list2) {//找出两个有序链表中相同的元素
+  LinkedList<int> list3;
+  int i = 0, j = 0;
+  while (i < list1.getLength() && j < list2.getLength()) {
+    if (list1.get(i) < list2.get(j)) {
+      i++;
+    } else if (list1.get(i) > list2.get(j)) {
+      j++;
+    } else {
+      list3.push_back(list1.get(i));
+      i++;
+      j++;
+    }
+  }
+  return list3;
+}
+
+//链表完

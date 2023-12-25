@@ -1,7 +1,15 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
+/*二分查找树类
+函数列表
+HalfSearchTree() 构造函数，建立一个空二分查找树
+HalfSearchTree(vector<Data> arr) 构造函数，建立一个二分查找树，元素为arr中的元素
+~HalfSearchTree() 析构函数，删除一个二分查找树
+void insert(Data data) 插入元素函数
+int search(int data) 查找元素函数，返回元素在原队列中的位置
+void InorderTravel() 中序遍历
+*/
 struct Data {  // 数据结构体带位置信息
   int data;
   int count;  // 元素位置
@@ -113,3 +121,4 @@ int main() {
   cout << halfSearchTree.search(4) << endl;
   return 0;
 }
+//二分查找树完

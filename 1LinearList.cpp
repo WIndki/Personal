@@ -198,3 +198,4 @@ void MergeList(LinearList<int> &L1, LinearList<int> &L2,
     L3.push_back(L2.get(j++));
   }
 }
+//线性表完
